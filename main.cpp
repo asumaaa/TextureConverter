@@ -1,6 +1,5 @@
 #include "cstdio"
 #include "cstdlib"
-#include "DirectXTex.h"
 #include "TextureConverter.h"
 
 //コマンドライン引数
@@ -14,7 +13,7 @@ enum Argument {
 int main(int argc, char* argv[]) {
 
 
-	assert(argc >= NumArgument);
+	/*assert(argc >= NumArgument);*/
 
 	//COMライブラリの初期化
 	HRESULT hr = CoInitializeEx(nullptr, COINITBASE_MULTITHREADED);
