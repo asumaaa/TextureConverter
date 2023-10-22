@@ -28,15 +28,6 @@ int main(int argc, char* argv[]) {
 	//COMライブラリの終了
 	CoUninitialize();
 
-	////argcの数だけ繰り返す
-	//for (int i = 0; i < argc; i++)
-	//{
-	//	//文字列argvのi番を取得
-	//	printf(argv[i]);
-	//	//改行
-	//	printf("\n");
-	//}
-
-	system("pause");
+	/*system("pause");*/
 	return 0;
 }
