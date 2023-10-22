@@ -18,7 +18,14 @@ public:	//メンバ関数
 	/// テクスチャをWICからDDSに変換する
 	///	<sammary>
 	/// <param name="filePath">ファイルパス</param>
-	void ConvertTextureWICoDDS(const std::string& filePath);
+	/// <param name="numOptions">オプションの数</param>
+	/// <param name="options">オプション配列</param>
+	void ConvertTextureWICoDDS(const std::string& filePath,int numOptions = 0,char* options[] = nullptr);
+
+	/// <sammary>
+	/// 使用方法を出力する
+	///	<sammary>
+	static void OutputUsage();
 
 private: //メンバ関数
 
@@ -44,7 +51,9 @@ private: //メンバ関数
 	/// <sammary>
 	/// DDSテクスチャとしてファイル書き出し
 	///	<sammary>
-	void SaveDDSTextureToFile();
+	/// <param name="numOptions">オプションの数</param>
+	/// <param name="options">オプション配列</param>
+	void SaveDDSTextureToFile(int numOptions = 0, char* options[] = nullptr);
 
 private: //メンバ変数
 	//画像の情報

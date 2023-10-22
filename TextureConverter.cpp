@@ -9,13 +9,25 @@
 #include <windows.h>
 
 // テクスチャをWICからDDSに変換する
-void TextureConverter::ConvertTextureWICoDDS(const std::string& filePath)
+void TextureConverter::ConvertTextureWICoDDS(const std::string& filePath,int numOptions, char* options[])
 {
 	//テクスチャファイルを読み込む
 	LoadWICTextureFromFile(filePath);
 
 	//DDS形式に変換して書き出す
-	SaveDDSTextureToFile();
+	SaveDDSTextureToFile(numOptions, options);
+}
+
+// 使用方法を出力する
+void TextureConverter::OutputUsage()
+{
+	printf("画像ファイルをWIC形式からDDS形式に変換します。\n");
+	printf("\n");
+	printf("TextureConverter [ドライブ:][パス][ファイル名]\n");
+	printf("\n");
+	printf(" [ドライブ:][パス][ファイル名]: 変換したいWIC形式の画像ファイルを指定します。\n");
+	printf("\n");
+	printf(" [-ml level]: ミップレベルを指定します。0を指定すると1x1までのフルミップマップチェーンを生成します。\n");
 }
 
 // テクスチャファイル読み込み
@@ -96,15 +108,25 @@ void TextureConverter::SeparateFilePath(const std::wstring& filePath)
 }
 
 // DDSテクスチャとしてファイル書き出し
-void TextureConverter::SaveDDSTextureToFile()
+void TextureConverter::SaveDDSTextureToFile(int numOptions, char* options[])
 {
 	HRESULT result;
+
+	size_t mipLevel = 0;
+	//ミップマップレベル指定を検索
+	for (int i = 0; i < numOptions; i++){
+		if (std::string(options[i]) == "-ml") {
+			//ミップレベル指定
+			mipLevel = std::stoi(options[i + 1]);
+			break;
+		}
+	}
 
 	//ミップマップ生成
 	DirectX::ScratchImage mipChain;
 	result = DirectX::GenerateMipMaps(
 		scratchImage_.GetImages(), scratchImage_.GetImageCount(), scratchImage_.GetMetadata(),
-		DirectX::TEX_FILTER_DEFAULT, 0, mipChain
+		DirectX::TEX_FILTER_DEFAULT, mipLevel, mipChain
 	);
 	if (SUCCEEDED(result)) {
 		//イメージとメタデータを、ミップマップ版で置き換える
